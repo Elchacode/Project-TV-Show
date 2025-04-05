@@ -97,3 +97,9 @@ p.source a {
     width: 90%;
   }
 }
+
+@media (max-width: 320px) {
+  .episode {
+    width: 100%;
+  }
+}
