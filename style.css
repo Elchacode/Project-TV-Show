@@ -1,3 +1,99 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f3e9dc;
+  color: #07070a;
+  text-align: center;
+}
+
 #root {
-  color: red;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+}
+
+.page-count {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+}
+
+.episode {
+  background-color: #b6ad90;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  padding: 20px;
+  width: 300px;
+}
+
+.episode h2 {
+  font-size: 18px;
+  margin-top: 0;
+}
+
+.episode img {
+  max-width: 100%;
+}
+
+.episode p {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+p.source {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+}
+
+p.source a {
+  color: #07070a;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.foot {
+  padding: 20px;
+  text-align: center;
+  margin: 20px;
+}
+
+.foot p {
+  text-decoration: none;
+}
+
+.foot a {
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background-color: #79745c;
+}
+
+.foot a:hover {
+  background-color: #6d664e;
+}
+
+@media (max-width: 768px) {
+  .episode {
+    width: 45%;
+  }
+}
+
+@media (max-width 480px) {
+  .episode {
+    width: 90%;
+  }
 }
