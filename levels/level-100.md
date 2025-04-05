@@ -20,6 +20,6 @@ For level 100, we are going to display information about every episode of a sing
 
 Note: Provided your project meets the above requirements, it can **look** however you want. Do the simplest thing to begin with.
 
-Here is one example layout.
+Here is one example layout..
 
 ![Screenshot of a website with cards showing per-episode data according to the requirements](example-screenshots/example-level-100.png)
