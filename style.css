@@ -87,19 +87,19 @@ p.source a {
 }
 
 @media (max-width: 768px) {
-  .episode {
-    width: 45%;
+  #root {
+    flex-direction: column;
   }
 }
 
 @media (max-width 480px) {
-  .episode {
-    width: 90%;
+  #root {
+    flex-direction: column;
   }
 }
 
 @media (max-width: 320px) {
-  .episode {
-    width: 100%;
+  #root {
+    flex-direction: column;
   }
 }
