@@ -89,17 +89,20 @@ p.source a {
 @media (max-width: 768px) {
   #root {
     flex-direction: column;
+    justify-content: center;
   }
 }
 
 @media (max-width 480px) {
   #root {
     flex-direction: column;
+    justify-content: center;
   }
 }
 
 @media (max-width: 320px) {
   #root {
     flex-direction: column;
+    justify-content: center;
   }
 }
