@@ -5,12 +5,47 @@ import { getAllEpisodes } from "./episodes.js"; // import all of the episodes in
 function setup() {
   // initialize all of the episodes in the getAllEpisodes function by assigning the function to a variable called allEpisodes
   const allEpisodes = getAllEpisodes();
+
+  //Modification-below: 060425
+  const searchBox = document.querySelector("#search-box");
+  const resultCount = document.querySelector("#result-count");
+  //Stop
   makePageForEpisodes(allEpisodes); // passing allEpisodes as a parameter to the getAllEpisodes function when makePageForEpisodes is called.
+
+//Modification: 060425
+resultCount.textContent = `${allEpisodes.length} episode(s) found`;
+
+searchBox.addEventListener("input", () => {
+  const searchTerm = searchBox.value.toLowerCase().trim();
+  const filtered = filterEpisodes(allEpisodes, searchTerm);
+
+  makePageForEpisodes(filtered);
+  resultCount.textContent = `${filtered.length} episode(s) found`;
+
+});
+
+
+
+
 }
+
+
+
+function filterEpisodes(films, searchTerm) {
+  return films.filter(film =>
+    film.name.toLowerCase().includes(searchTerm) ||
+    film.summary.toLowerCase().includes(searchTerm)
+  );
+}
+
+//Stop
 
 function makePageForEpisodes(episodeList) {
   // created a function called when makePageForEpisodes to execute and preview the page for the given episode list in the web page
   const rootElem = document.getElementById("root"); // get the root element id from the html file.
+  // Modification-below: 060425
+  rootElem.innerHTML = "";
+  // Stop
 
   const episodeCount = document.createElement("div"); // created a div to hold the number of episodes in the web page
   episodeCount.classList.add("page-count"); // created a class inside the div to hold the number of episode on the webpage
@@ -24,7 +59,7 @@ function makePageForEpisodes(episodeList) {
     episodeElem.classList.add("episode"); // implemented a class element for styling purposes..
 
     const episodeTitle = document.createElement("h2"); // in other to get the name,season, and number we implemented an h2 element while using template literal in other to combine the season and number with zero padded characters of 2 digits.
-    episodeTitle.textContent = `${episode.name} (S${episode.season // converted to string and then padStart the season and number using padStart method.
+    episodeTitle.textContent = `${episode.name} S${episode.season // converted to string and then padStart the season and number using padStart method.
       .toString()
       .padStart(2, "0")} E${episode.number.toString().padStart(2, "0")}`;
 
