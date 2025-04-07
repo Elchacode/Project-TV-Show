@@ -2,25 +2,26 @@
 
 import { getAllEpisodes } from "./episodes.js"; // import all of the episodes in the getAllEpisodes function.
 
-function setup() {
-  // initialize all of the episodes in the getAllEpisodes function by assigning the function to a variable called allEpisodes
-  const allEpisodes = getAllEpisodes();
+function setup() {// This is the main setup function that runs when the page is loaded.
+  
+  const allEpisodes = getAllEpisodes(); // Get all episodes by calling the imported function and stores it into a variable.
 
   
-  const searchBox = document.querySelector("#search-box");
-  const resultCount = document.querySelector("#result-count");
+  const searchBox = document.querySelector("#search-box"); // Get the search box element from the HTML
+  const resultCount = document.querySelector("#result-count");//Get the result count display from the HTML
   
-  makePageForEpisodes(allEpisodes); // passing allEpisodes as a parameter to the getAllEpisodes function when makePageForEpisodes is called.
+  makePageForEpisodes(allEpisodes); // Displays all episodes on the page.
 
 
-resultCount.textContent = `${allEpisodes.length} episode(s) found`;
+resultCount.textContent = `${allEpisodes.length} episode(s) found`;// Display total number of episodes found
 
+//Event listener is added to the search box
 searchBox.addEventListener("input", () => {
-  const searchTerm = searchBox.value.toLowerCase().trim();
-  const filtered = filterEpisodes(allEpisodes, searchTerm);
+  const searchTerm = searchBox.value.toLowerCase().trim(); //Gets the trimmed, lowercased search term
+  const filtered = filterEpisodes(allEpisodes, searchTerm); //filters the list of episodes based on the searchTerm
 
-  makePageForEpisodes(filtered);
-  resultCount.textContent = `${filtered.length} episode(s) found`;
+  makePageForEpisodes(filtered); //Displayed only filtered episodes on a page
+  resultCount.textContent = `${filtered.length} episode(s) found`; //updates the result count based on the number of episodes found
 
 });
 
@@ -31,7 +32,7 @@ searchBox.addEventListener("input", () => {
 
 
 
-function filterEpisodes(films, searchTerm) {
+function filterEpisodes(films, searchTerm) {//This function filters episodes if search item is in name or summary
   return films.filter(film =>
     film.name.toLowerCase().includes(searchTerm) ||
     film.summary.toLowerCase().includes(searchTerm)
@@ -39,12 +40,12 @@ function filterEpisodes(films, searchTerm) {
 }
 
 
-
-function makePageForEpisodes(episodeList) {
+// In order to display a given episode list on the webpage-we need to create function makePageForEpisodes.
+function makePageForEpisodes(episodeList) { 
   // created a function called when makePageForEpisodes to execute and preview the page for the given episode list in the web page
   const rootElem = document.getElementById("root"); // get the root element id from the html file.
   
-  rootElem.innerHTML = "";
+  rootElem.innerHTML = "";  // Clear any existing content
 
 
   const episodeCount = document.createElement("div"); // created a div to hold the number of episodes in the web page
@@ -53,17 +54,18 @@ function makePageForEpisodes(episodeList) {
 
   rootElem.appendChild(episodeCount); // append the child element to the parent element which o the rootElem.
 
+  // To populate the dropdown selector with available episodes
 const episodeSelector = document.getElementById("episode-selector");
 episodeSelector.innerHTML = '<option value="">Select an Episode</option>'; // Reset the dropdown before adding items
 
 episodeList.forEach((episode, index) => {
   const option = document.createElement("option");
-  option.value = index; // Use the index to identify the episode
+  option.value = index; // Set the value to index so we can identify it later
   option.textContent = `S${episode.season.toString().padStart(2, "0")}E${episode.number.toString().padStart(2, "0")} - ${episode.name}`;
-  episodeSelector.appendChild(option);
+  episodeSelector.appendChild(option); //set the text content to Episode season, number and name
 });
 
-// Add event listener to handle episode selection
+// Add event listener to handle episode selection-so that when the user selects an episode from the dropdown this happens
 episodeSelector.addEventListener("change", (event) => {
   const selectedIndex = event.target.value;
   if (selectedIndex === "") {
