@@ -6,13 +6,13 @@ function setup() {
   // initialize all of the episodes in the getAllEpisodes function by assigning the function to a variable called allEpisodes
   const allEpisodes = getAllEpisodes();
 
-  //Modification-below: 060425
+  
   const searchBox = document.querySelector("#search-box");
   const resultCount = document.querySelector("#result-count");
-  //Stop
+  
   makePageForEpisodes(allEpisodes); // passing allEpisodes as a parameter to the getAllEpisodes function when makePageForEpisodes is called.
 
-//Modification: 060425
+
 resultCount.textContent = `${allEpisodes.length} episode(s) found`;
 
 searchBox.addEventListener("input", () => {
@@ -38,20 +38,43 @@ function filterEpisodes(films, searchTerm) {
   );
 }
 
-//Stop
+
 
 function makePageForEpisodes(episodeList) {
   // created a function called when makePageForEpisodes to execute and preview the page for the given episode list in the web page
   const rootElem = document.getElementById("root"); // get the root element id from the html file.
-  // Modification-below: 060425
+  
   rootElem.innerHTML = "";
-  // Stop
+
 
   const episodeCount = document.createElement("div"); // created a div to hold the number of episodes in the web page
   episodeCount.classList.add("page-count"); // created a class inside the div to hold the number of episode on the webpage
   episodeCount.textContent = `Got ${episodeList.length} episode(s)`; // implemented template literal to display the number of episodes.
 
   rootElem.appendChild(episodeCount); // append the child element to the parent element which o the rootElem.
+
+const episodeSelector = document.getElementById("episode-selector");
+episodeSelector.innerHTML = '<option value="">Select an Episode</option>'; // Reset the dropdown before adding items
+
+episodeList.forEach((episode, index) => {
+  const option = document.createElement("option");
+  option.value = index; // Use the index to identify the episode
+  option.textContent = `S${episode.season.toString().padStart(2, "0")}E${episode.number.toString().padStart(2, "0")} - ${episode.name}`;
+  episodeSelector.appendChild(option);
+});
+
+// Add event listener to handle episode selection
+episodeSelector.addEventListener("change", (event) => {
+  const selectedIndex = event.target.value;
+  if (selectedIndex === "") {
+    // If no episode is selected, show all episodes
+    makePageForEpisodes(allEpisodes);
+  } else {
+    // Show only the selected episode
+    const selectedEpisode = episodeList[selectedIndex];
+    makePageForEpisodes([selectedEpisode]);
+  }
+});
 
   episodeList.forEach((episode) => {
     // implemented a forEach method to iterate over the episodes in the web page
