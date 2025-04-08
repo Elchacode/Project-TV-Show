@@ -2,15 +2,64 @@
 
 import { getAllEpisodes } from "./episodes.js"; // import all of the episodes in the getAllEpisodes function.
 
-function setup() {
-  // initialize all of the episodes in the getAllEpisodes function by assigning the function to a variable called allEpisodes
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes); // passing allEpisodes as a parameter to the getAllEpisodes function when makePageForEpisodes is called.
+function liveSearch(films) {
+  const searchBox = document.querySelector("#search-box"); // Get the search box element from the HTML
+  const resultCount = document.querySelector("#result-count"); // Get the result count display from the HTML
+
+  // Event listener is added to the search box
+  searchBox.addEventListener("input", () => {
+    const searchTerm = searchBox.value.toLowerCase().trim(); // Gets the trimmed, lowercased search term
+    const filtered = filterEpisodes(films, searchTerm); // Filters the list of episodes based on the searchTerm
+
+    makePageForEpisodes(filtered); // Displays only filtered episodes on the page
+    resultCount.textContent = `${filtered.length} episode(s) found`; // Updates the result count based on the number of episodes found
+  });
 }
 
+function filterEpisodes(films, searchTerm) {
+  // This function filters episodes if the search term is in the name or summary
+  return films.filter(
+    (film) =>
+      film.name.toLowerCase().includes(searchTerm) ||
+      film.summary.toLowerCase().includes(searchTerm)
+  );
+}
+
+function episodeSelector(films) {
+  const episodeSelector = document.getElementById("episode-selector");
+  episodeSelector.innerHTML = '<option value="">Select an Episode</option>'; // Reset the dropdown before adding items
+
+  films.forEach((episode, index) => {
+    const option = document.createElement("option");
+    option.value = index; // Set the value to index so we can identify it later
+    option.textContent = `S${episode.season
+      .toString()
+      .padStart(2, "0")}E${episode.number.toString().padStart(2, "0")} - ${
+      episode.name
+    }`;
+    episodeSelector.appendChild(option); // Set the text content to Episode season, number, and name
+  });
+
+  // Add event listener to handle episode selection
+  episodeSelector.addEventListener("change", (event) => {
+    const selectedIndex = event.target.value; // Get the selected index
+    if (selectedIndex === "") {
+      // If no episode is selected, show all episodes
+      makePageForEpisodes(films);
+    } else {
+      // Show only the selected episode
+      const selectedEpisode = films[selectedIndex];
+      makePageForEpisodes([selectedEpisode]);
+    }
+  });
+}
+
+// In order to display a given episode list on the webpage-we need to create function makePageForEpisodes.
 function makePageForEpisodes(episodeList) {
   // created a function called when makePageForEpisodes to execute and preview the page for the given episode list in the web page
   const rootElem = document.getElementById("root"); // get the root element id from the html file.
+
+  rootElem.innerHTML = ""; // Clear any existing content
 
   const episodeCount = document.createElement("div"); // created a div to hold the number of episodes in the web page
   episodeCount.classList.add("page-count"); // created a class inside the div to hold the number of episode on the webpage
@@ -18,13 +67,15 @@ function makePageForEpisodes(episodeList) {
 
   rootElem.appendChild(episodeCount); // append the child element to the parent element which o the rootElem.
 
+  // Add event listener to handle episode selection-so that when the user selects an episode from the dropdown this happens
+
   episodeList.forEach((episode) => {
     // implemented a forEach method to iterate over the episodes in the web page
     const episodeElem = document.createElement("div"); // implemented a div element
     episodeElem.classList.add("episode"); // implemented a class element for styling purposes..
 
     const episodeTitle = document.createElement("h2"); // in other to get the name,season, and number we implemented an h2 element while using template literal in other to combine the season and number with zero padded characters of 2 digits.
-    episodeTitle.textContent = `${episode.name} (S${episode.season // converted to string and then padStart the season and number using padStart method.
+    episodeTitle.textContent = `${episode.name} S${episode.season // converted to string and then padStart the season and number using padStart method.
       .toString()
       .padStart(2, "0")} E${episode.number.toString().padStart(2, "0")}`;
 
@@ -40,17 +91,26 @@ function makePageForEpisodes(episodeList) {
 
     rootElem.appendChild(episodeElem); // append the episodeElem which is the parent to the grandparent element.
   });
-
-  // const source = document.createElement("p");
-  // source.innerHTML = `Data Originally from: <a href="https://api.tvmaze.com/shows/1/episodes"></a>`;
-
-  // const link = document.createElement("a");
-  // link.href = "https://www.tvmaze.com/";
-  // link.textContent = "TVmaze.com";
-
-  // source.appendChild(link);
-
-  // rootElem.appendChild(source);
 }
+
+function setup() {
+  // This is the main setup function that runs when the page is loaded.
+
+  const allEpisodes = getAllEpisodes(); // Get all episodes by calling the imported function and stores it into a variable.
+  makePageForEpisodes(allEpisodes); // Displays all episodes on the page.
+  liveSearch(allEpisodes);
+  episodeSelector(allEpisodes);
+}
+
+// const source = document.createElement("p");
+// source.innerHTML = `Data Originally from: <a href="https://api.tvmaze.com/shows/1/episodes"></a>`;
+
+// const link = document.createElement("a");
+// link.href = "https://www.tvmaze.com/";
+// link.textContent = "TVmaze.com";
+
+// source.appendChild(link);
+
+// rootElem.appendChild(source);
 
 window.onload = setup; // when the window load it execute the setup function.
