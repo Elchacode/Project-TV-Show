@@ -99,10 +99,12 @@ function setup() {
   loadMessage.style.display = "block"; // Show loading message
   loadMessage.textContent = "Loading episodes, please wait..."; // Set the loading message
 
+  errorMessage.style.display = "none"; // Hide error message
+
   fetch("https://api.tvmaze.com/shows/82/episodes") // Fetches the data from the API
     .then((response) => response.json()) // Convert the response to JSON
     .then((episodeData) => {
-      // loadMessage.style.display = "none"; // Hide loading message
+      loadMessage.style.display = "none"; // Hide loading message
       // Once data is fetched, render the episodes
       getEpisode = episodeData; // Store the episode data in a variable
       makePageForEpisodes(episodeData); // Render all episodes
