@@ -12,7 +12,7 @@
     <header>
       <h1>Game of Thrones Episodes</h1>
     </header>
-
+    <div id="loading-message">Loading episodes, please wait...</div>
     <div class="search-container">
       <input
         type="text"
@@ -22,12 +22,11 @@
       <p id="result-count"></p>
 
       <select id="episode-selector" class="episode-selector">
-      <option value="">Select an Episode</option>
-    
+        <option value="">Select an Episode</option>
       </select>
-
+      <div id="error-message" style="color: red"></div>
     </div>
-    
+
     <div id="root"></div>
 
     <footer class="foot">
@@ -48,6 +47,6 @@
     </footer>
 
     <!-- Loads YOUR javascript code -->
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
