@@ -96,12 +96,13 @@ let getEpisode = [];
 function setup() {
   const loadMessage = document.getElementById("loading-message"); // Get the loading message element
   const errorMessage = document.getElementById("error-message"); // Get the error message element
+  loadMessage.style.display = "block"; // Show loading message
   loadMessage.textContent = "Loading episodes, please wait..."; // Set the loading message
 
   fetch("https://api.tvmaze.com/shows/82/episodes") // Fetches the data from the API
     .then((response) => response.json()) // Convert the response to JSON
     .then((episodeData) => {
-      loadMessage.style.display = "none"; // Hide loading message
+      // loadMessage.style.display = "none"; // Hide loading message
       // Once data is fetched, render the episodes
       getEpisode = episodeData; // Store the episode data in a variable
       makePageForEpisodes(episodeData); // Render all episodes
@@ -112,6 +113,7 @@ function setup() {
       loadMessage.style.display = "none"; // Hide loading message
       errorMessage.textContent =
         "Opps ! can't load 👀.  Please try again later"; // Show error message
+      errorMessage.style.display = "block"; // Show error message
     });
 }
 
