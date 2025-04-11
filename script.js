@@ -1,4 +1,29 @@
 //You can edit ALL of the code here
+//<-------------------------Additions by segun-----------------------------------------------------
+const heading = document.createElement('h1');
+heading.textContent = 'Select a TV Show';
+document.body.appendChild(heading);
+
+// Create a <select> dropdown
+const select = document.createElement('select');
+select.id = 'show-select';
+
+// Add a default option
+const defaultOption = document.createElement('option');
+defaultOption.textContent = '-- Choose a show --';
+defaultOption.value = '';
+select.appendChild(defaultOption);
+
+// Append the dropdown to the page
+document.body.appendChild(select);
+
+// Create a div to hold episode listings
+const episodesDiv = document.createElement('div');
+episodesDiv.id = 'episodes';
+document.body.appendChild(episodesDiv);
+
+
+//<----------------------------Additions by Segun---------------for step 4----------------------------->
 
 function liveSearch(films) {
   const searchBox = document.querySelector("#search-box"); // Get the search box element from the HTML
@@ -98,9 +123,35 @@ function setup() {
   const errorMessage = document.getElementById("error-message"); // Get the error message element
   loadMessage.style.display = "block"; // Show loading message
   loadMessage.textContent = "Loading episodes, please wait..."; // Set the loading message
-
   errorMessage.style.display = "none"; // Hide error message
+  //<-----------------------------------------Additions by Segun For level four----------------------------------------
+  fetch('https://api.tvmaze.com/shows')
+  .then(response => response.json())
+  .then(shows => {
+    shows.sort((a, b) => a.name.localeCompare(b.name)); // Alphabetical sort
+    shows.forEach(show => {
+      const option = document.createElement('option');
+      option.value = show.id;
+      option.textContent = show.name;
+      select.appendChild(option);
+    });
+  })
+  .catch(error => console.error('Error fetching shows:', error));
 
+  select.addEventListener('change', () => {
+    const showId = select.value;
+    episodesDiv.innerHTML = ''; })
+
+
+
+
+ 
+
+  
+
+  if (showId) {
+
+//<---------------------------------------------------Additions by Segun for level four-------------------------------------
   fetch("https://api.tvmaze.com/shows/82/episodes") // Fetches the data from the API
     .then((response) => response.json()) // Convert the response to JSON
     .then((episodeData) => {
@@ -118,6 +169,7 @@ function setup() {
       errorMessage.style.display = "block"; // Show error message
     });
 }
+}
 
 // const source = document.createElement("p");
 // source.innerHTML = `Data Originally from: <a href="https://api.tvmaze.com/shows/1/episodes"></a>`;
@@ -130,4 +182,4 @@ function setup() {
 
 // rootElem.appendChild(source);
 
-window.onload = setup; // when the window load it execute the setup function.
+window.onload = setup; // when the window load it execute the setup function
