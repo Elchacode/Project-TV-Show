@@ -91,9 +91,13 @@ function makePageForEpisodes(episodeList) {
   });
 }
 
-let getEpisode = [];
+const state = {
+  // created a state object to hold the data of the episodes
+  getEpisode: [], // this is an empty array that will hold the episodes data
+  searchTerm: "", // this is an empty string that will hold the search term
+};
 
-function setup() {
+function getEpisode() {
   const loadMessage = document.getElementById("loading-message"); // Get the loading message element
   const errorMessage = document.getElementById("error-message"); // Get the error message element
   loadMessage.style.display = "block"; // Show loading message
@@ -106,10 +110,16 @@ function setup() {
     .then((episodeData) => {
       loadMessage.style.display = "none"; // Hide loading message
       // Once data is fetched, render the episodes
-      getEpisode = episodeData; // Store the episode data in a variable
-      makePageForEpisodes(episodeData); // Render all episodes
-      liveSearch(episodeData); // Enable live search
-      episodeSelector(episodeData); // Enable episode selection
+
+      if (episodeData && episodeData.length) {
+        state.getEpisode = episodeData;
+        makePageForEpisodes(episodeData);
+        liveSearch(episodeData);
+        episodeSelector(episodeData);
+      } else {
+        errorMessage.textContent = "No episodes found.";
+        errorMessage.style.display = "block";
+      }
     })
     .catch((error) => {
       loadMessage.style.display = "none"; // Hide loading message
@@ -119,15 +129,8 @@ function setup() {
     });
 }
 
-// const source = document.createElement("p");
-// source.innerHTML = `Data Originally from: <a href="https://api.tvmaze.com/shows/1/episodes"></a>`;
-
-// const link = document.createElement("a");
-// link.href = "https://www.tvmaze.com/";
-// link.textContent = "TVmaze.com";
-
-// source.appendChild(link);
-
-// rootElem.appendChild(source);
+function setup() {
+  getEpisode(); // Fetch episodes from the API
+}
 
 window.onload = setup; // when the window load it execute the setup function.
