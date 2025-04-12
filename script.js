@@ -140,7 +140,7 @@ function setup() {
 
   select.addEventListener('change', () => {
     const showId = select.value;
-    episodesDiv.innerHTML = ''; })
+    episodesDiv.innerHTML = ''; 
 
 
 
@@ -152,7 +152,7 @@ function setup() {
   if (showId) {
 
 //<---------------------------------------------------Additions by Segun for level four-------------------------------------
-  fetch("https://api.tvmaze.com/shows/82/episodes") // Fetches the data from the API
+  fetch(`https://api.tvmaze.com/shows/${showId}/episodes`) // Fetches the data from the API
     .then((response) => response.json()) // Convert the response to JSON
     .then((episodeData) => {
       loadMessage.style.display = "none"; // Hide loading message
@@ -169,6 +169,9 @@ function setup() {
       errorMessage.style.display = "block"; // Show error message
     });
 }
+});
+
+
 }
 
 // const source = document.createElement("p");
