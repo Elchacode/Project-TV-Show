@@ -4,7 +4,6 @@
 //<-------------------------Additions by segun-----------------------------------------------------
 const heading = document.createElement('h1');
 heading.textContent = 'Select a TV Show';
-document.body.appendChild(heading);
 
 // Create a <select> dropdown
 const select = document.createElement('select');
@@ -17,12 +16,15 @@ defaultOption.value = '';
 select.appendChild(defaultOption);
 
 // Append the dropdown to the page
-document.body.appendChild(select);
 
 // Create a div to hold episode listings
 const episodesDiv = document.createElement('div');
 episodesDiv.id = 'episodes';
-document.body.appendChild(episodesDiv);
+
+
+document.body.prepend(episodesDiv);
+document.body.prepend(select);
+document.body.prepend(heading);
 
 //<----------------------------Additions by Segun---------------for step 4----------------------------->
 
@@ -129,14 +131,18 @@ function getEpisode() {
   const loadMessage = document.getElementById("loading-message"); // Get the loading message element
   const errorMessage = document.getElementById("error-message"); // Get the error message element
   loadMessage.style.display = "block"; // Show loading message
-  loadMessage.textContent = "Loading episodes, please wait..."; // Set the loading message
+  loadMessage.textContent = "Loading , please wait..."; // Set the loading message
   errorMessage.style.display = "none"; // Hide error message
 
 
   //<-----------------------------------------Additions by Segun For level four----------------------------------------
+
   fetch('https://api.tvmaze.com/shows')
   .then(response => response.json())
   .then(shows => {
+
+    loadMessage.style.display = "none";
+
     shows.sort((a, b) => a.name.localeCompare(b.name)); // Alphabetical sort
     shows.forEach(show => {
       const option = document.createElement('option');
@@ -154,6 +160,8 @@ function getEpisode() {
 
   if (showId) {
 
+    loadMessage.textContent = "Loading , please wait..."; 
+    
 //<---------------------------------------------------Additions by Segun for level four-------------------------------------
 
 
