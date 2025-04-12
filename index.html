@@ -24,6 +24,20 @@
       </select>
     </div>
 
+    <div style="text-align: center; margin-top: 10px">
+      <select id="select-show" style="padding: 8px; font-size: 16px">
+        <option value="">Select a Show</option>
+      </select>
+    </div>
+
+    <div id="status-message"></div>
+
+    <!-- Display number of episodes found -->
+    <div id="episode-count"></div>
+
+    <!-- Container to display episodes -->
+    <div id="episode-container"></div>
+
     <div class="movie-container" id="movie-container">
       <template id="movie-template">
         <div class="movie-card">
@@ -48,7 +62,7 @@
       </p>
     </footer>
 
-    <!-- Loads a provided function called getAllEpisodes() which returns all episodes --->
+    <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
 
     <!-- Loads YOUR javascript code -->
