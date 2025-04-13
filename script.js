@@ -139,6 +139,33 @@ function getEpisode() {
 
   //<-----------------------------------------main changes by Segun For level four----------------------------------------
 
+  fetch(`https://api.tvmaze.com/shows/82/episodes`) // Fetches the data from the API.
+  .then((response) => response.json()) // Convert the response to JSON
+  .then((episodeData) => {
+    loadMessage.style.display = "none"; // Hide loading message
+    // Once data is fetched, render the episodes
+
+    if (episodeData && episodeData.length) {
+      state.getEpisode = episodeData;
+      makePageForEpisodes(episodeData);
+      liveSearch(episodeData);
+      episodeSelector(episodeData);
+    } else {
+      errorMessage.textContent = "No episodes found.";
+      errorMessage.style.display = "block";
+    }
+  })
+  
+  .catch((error) => {
+    loadMessage.style.display = "none"; // Hide loading message
+    errorMessage.textContent =
+      "Opps ! can't load 👀.  Please try again later"; // Show error message
+    errorMessage.style.display = "block"; // Show error message
+  });
+
+
+  //................................................................................................................................
+
   fetch('https://api.tvmaze.com/shows')    //Get a list of shows
   .then(response => response.json())
   .then(shows => {
