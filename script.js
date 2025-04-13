@@ -2,6 +2,7 @@
 
 
 //<-------------------------Additions by segun-----------------------------------------------------
+// Create an HTML heading
 const heading = document.createElement('h1');
 heading.textContent = 'Select a TV Show';
 
@@ -15,13 +16,12 @@ defaultOption.textContent = '-- Choose a show --';
 defaultOption.value = '';
 select.appendChild(defaultOption);
 
-// Append the dropdown to the page
 
-// Create a div to hold episode listings
+//Create a div to hold episode listings
 const episodesDiv = document.createElement('div');
 episodesDiv.id = 'episodes';
 
-
+//Attach the HTML Heading, the Select dropdow
 document.body.prepend(episodesDiv);
 document.body.prepend(select);
 document.body.prepend(heading);
