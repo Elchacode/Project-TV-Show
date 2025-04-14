@@ -1,5 +1,37 @@
 //You can edit ALL of the code here
 
+
+//<-------------------------main changes made by segun-----------------------------------------------------
+// Create an HTML heading
+const heading = document.createElement('h1');
+heading.textContent = 'Select a TV Show';
+
+// Create a <select> dropdown
+const select = document.createElement('select');
+select.id = 'show-select';
+
+// Add a default option to the drop down
+const defaultOption = document.createElement('option');
+defaultOption.textContent = '-- Choose a show --';
+defaultOption.value = '';
+select.appendChild(defaultOption);
+
+//Add the select drop down and the HTML heading  to the body
+document.body.prepend(select);
+document.body.prepend(heading);
+
+//<----------------------------main changes made by Segun---------------for step 4----------------------------->
+
+
+
+//Create a div to hold episode listings
+const episodesDiv = document.createElement('div');
+episodesDiv.id = 'episodes';
+document.body.prepend(episodesDiv);
+
+
+
+
 function liveSearch(films) {
   const searchBox = document.querySelector("#search-box"); // Get the search box element from the HTML
   const resultCount = document.querySelector("#result-count"); // Get the result count display from the HTML
@@ -101,11 +133,72 @@ function getEpisode() {
   const loadMessage = document.getElementById("loading-message"); // Get the loading message element
   const errorMessage = document.getElementById("error-message"); // Get the error message element
   loadMessage.style.display = "block"; // Show loading message
-  loadMessage.textContent = "Loading episodes, please wait..."; // Set the loading message
-
+  loadMessage.textContent = "Loading , please wait..."; // Set the loading message
   errorMessage.style.display = "none"; // Hide error message
 
-  fetch("https://api.tvmaze.com/shows/82/episodes") // Fetches the data from the API
+
+  //<-----------------------------------------main changes by Segun For level four----------------------------------------
+
+  fetch(`https://api.tvmaze.com/shows/82/episodes`) // Fetches the data from the API.
+  .then((response) => response.json()) // Convert the response to JSON
+  .then((episodeData) => {
+    loadMessage.style.display = "none"; // Hide loading message
+    // Once data is fetched, render the episodes
+
+    if (episodeData && episodeData.length) {
+      state.getEpisode = episodeData;
+      makePageForEpisodes(episodeData);
+      liveSearch(episodeData);
+      episodeSelector(episodeData);
+    } else {
+      errorMessage.textContent = "No episodes found.";
+      errorMessage.style.display = "block";
+    }
+  })
+  
+  .catch((error) => {
+    loadMessage.style.display = "none"; // Hide loading message
+    errorMessage.textContent =
+      "Opps ! can't load 👀.  Please try again later"; // Show error message
+    errorMessage.style.display = "block"; // Show error message
+  });
+
+
+  //................................................................................................................................
+
+  fetch('https://api.tvmaze.com/shows')    //Get a list of shows
+  .then(response => response.json())
+  .then(shows => {
+
+    loadMessage.style.display = "none";  //If fetch is successful remove loading message
+
+    shows.sort((a, b) => a.name.localeCompare(b.name)); // Alphabetical sort
+
+    //Create an option for each show and add to the select
+    shows.forEach(show => {
+      const option = document.createElement('option');
+      option.value = show.id;
+      option.textContent = show.name;
+      select.appendChild(option);
+    });
+  })
+  .catch(error => console.error('Error fetching shows:', error));
+
+
+  //Listen for a change of selected show
+  select.addEventListener('change', () => {
+    const showId = select.value;
+    episodesDiv.innerHTML = ''; 
+  
+
+  if (showId) {
+
+    loadMessage.textContent = "Loading , please wait...";  //Displays a message while attempting to fetch episode
+    
+//<---------------------------------------------------main changes by Segun for level four-------------------------------------
+
+
+  fetch(`https://api.tvmaze.com/shows/${showId}/episodes`) // Fetches the data from the API => I  altered your initial fetch to get the episodes of the selected show.
     .then((response) => response.json()) // Convert the response to JSON
     .then((episodeData) => {
       loadMessage.style.display = "none"; // Hide loading message
@@ -128,9 +221,13 @@ function getEpisode() {
       errorMessage.style.display = "block"; // Show error message
     });
 }
+});
+
+
+}
 
 function setup() {
   getEpisode(); // Fetch episodes from the API
 }
 
-window.onload = setup; // when the window load it execute the setup function.
+window.onload = setup; // when the window load it execute the setup function
