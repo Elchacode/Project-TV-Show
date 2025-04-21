@@ -5,6 +5,7 @@ For level 500, you should switch back to your original codebase.
 You should have merged someone else's level 400 implementation.
 
 Once again, compare their implementation to yours. Think:
+
 1. How is it different?
 2. What do you prefer about your implementation?
 3. What do you prefer about their implementation?
@@ -25,7 +26,7 @@ Level 500 is about adding a front-page which lets users select (and find) shows 
 ### Requirements
 
 1. When your app starts, present a listing of all shows ("shows listing")
-   1. For each show, you must display at least name, image, summary, genres, status, rating, and runtime.
+   1. For each show, you must display at least name, image, summary, genres, status, rating, and runtime..
 2. When a show name is clicked, your app should:
    1. Fetch and present episodes from that show (enabling episode search and selection as before)
    2. Hide the "shows listing" view
