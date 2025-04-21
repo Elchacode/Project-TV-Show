@@ -186,7 +186,7 @@ function getEpisode(showId) {
   //   errorMessage.textContent =
   //     "Opps ! can't load 👀.  Please try again later"; // Show error message
   //   errorMessage.style.display = "block"; // Show error message
-  // });
+  // });.
 
   //................................................................................................................................
 
