@@ -12,9 +12,11 @@
     <header>
       <h1>Game of Thrones Episodes</h1>
     </header>
+
     <div id="loading-message" style="display: none">
-      Loading episodes, please wait...
+      Loading episodes, please wait.....
     </div>
+
     <div class="search-container">
       <input
         type="text"
@@ -27,6 +29,12 @@
         <option value="">Select an Episode</option>
       </select>
       <div id="error-message" style="display: none; color: red"></div>
+      <div id="show-listings" class="show-listings"></div>
+      <div id="episodes" style="display: none">
+        <!-- <button id="back-button" style="display: none; color: red">
+          Back to Shows
+        </button> -->
+      </div>
     </div>
 
     <div id="root"></div>
