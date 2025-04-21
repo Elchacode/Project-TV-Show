@@ -353,7 +353,7 @@ function fetchAndDisplayEpisodesForShow(showId) {
     });
 }
 
-//Listen for a change of selected show
+//Listen for a change of selected show..
 // select.addEventListener("change", () => {
 //   const showId = select.value;
 //   episodesDiv.innerHTML = "";
